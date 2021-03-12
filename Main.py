@@ -1,13 +1,14 @@
 # noinspection PyUnresolvedReferences
 from collections import namedtuple
 import math
+import os
 
 
 #  This class simply takes the file provided and puts it into a manageable form
 class DataStucture:
     treeNode = namedtuple("treeNode", "value, PositiveVNegative, gain, left, right")
     FeatureValue = namedtuple("FeatureValue", "feature, value")
-    positive = 'e'
+    positive = 'I'
     empty = None
 
     def __init__(self, fileName):
@@ -65,7 +66,8 @@ def infoGain(struct, f):
     ltreeProb = leftTree / len(struct)
     rtreeProb = rightTree / len(struct)
     # calulate info gain from equation
-    infogain = calculateEntropy(struct) - rtreeProb * calculateEntropy(rightBranch) - ltreeProb * calculateEntropy(leftBranch)
+    infogain = calculateEntropy(struct) - rtreeProb * calculateEntropy(rightBranch) - ltreeProb * calculateEntropy(
+        leftBranch)
     return infogain
 
 
@@ -148,50 +150,25 @@ def id3(struct, classes, minGain):
 
 if __name__ == "__main__":
 
-    ans = None
-    while ans != 0:
-        arg1, arg2, arg3 = None, None, None
+    i = 0
+    x = 0
+    j = 0
+    gain = 0.1
 
-        ans = input("Would you like to provide training and testing data (1), use "
-                    "the preset filenames (test.csv and train.csv, make sure these are in the same directory)(2) "
-                    "or quit? (0) ")
-        try:
-            ans = int(ans)
-        except ValueError:
-            print("Error: Input should be an int")
-            exit()
+    script_dir = os.path.dirname(__file__)
 
-        if ans == 1:
-            arg1 = input("Enter training data csv file: ")
-            arg2 = input("Enter testing data csv file: ")
-            arg3 = input("Enter minimum gain for test: ")
-            try:
-                arg3 = float(arg3)
-            except ValueError:
-                print("Error: Min gain should be an number")
-                exit(0)
-            if arg3 < 0 or arg3 >= 1:
-                print("Error: Value for min gain should be between 0 and 1")
-                exit(0)
-        elif ans == 2:
-            arg2 = "test.csv"
-            arg1 = "train.csv"
-            arg3 = 0
-        elif ans == 0:
-            exit(1)
-        else:
-            print("Error: Invalid input. Please rerun and try again")
-            exit(0)
+    test_files = ["Data/Test/FB1.csv", "Data/Test/AAPL1.csv"]
+    train_files = ["Data/Train/FB2.csv", "Data/Train/AAPL2.csv"]
 
-        if arg1 is not None and arg2 is not None and arg3 is not None:
-            train = DataStucture(arg1)
-            test = DataStucture(arg2)
-            print("Running ID3 algorithm...")
-            decisionTree = id3(train.nodes, train.featureSet, arg3)
-            print("Root ", end='')
-            prettyPrintTree(decisionTree)
+    while i < 2:
 
-            acc = calculateAccuracy(decisionTree, test.nodes)
-            print("Accuracy is", acc)
-        else:
-            print("Error occurred, try again")
+        train = DataStucture(train_files[i])
+        test = DataStucture(test_files[i])
+        print("Running ID3 algorithm...")
+        decisionTree = id3(train.nodes, train.featureSet, gain)
+        print("Root ", end='')
+        prettyPrintTree(decisionTree)
+
+        acc = calculateAccuracy(decisionTree, test.nodes)
+        print(f"Accuracy is: {acc} \n")
+        i += 1

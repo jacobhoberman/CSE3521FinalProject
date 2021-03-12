@@ -2,5 +2,6 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/IDEK/Comparative-Analysis-of-ID3-and-Na-ve-Bayes-algorithm-on-Stock-Market-prediction" vcs="Git" />
   </component>
 </project>
