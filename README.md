@@ -7,3 +7,4 @@
 3. Use a 3rd party library implementation to compare the results.
 4. Document all results and include full description of project in the Google Doc.
 5. Turn in 1 day early (3/18)
+
