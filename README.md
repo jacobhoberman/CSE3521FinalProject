@@ -8,3 +8,4 @@
 4. Document all results and include full description of project in the Google Doc.
 5. Turn in 1 day early (3/18)
 
+**Should we keep the data column in the test/train data for reference incase we need it**
